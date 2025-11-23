@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BookManager</string>
+    <string name="hint_title">Enter Book Title</string>
+    <string name="hint_name">Enter Author Name</string>
+    <string name="app_title">Book Manager</string>
+    <string name="btn_next">Next</string>
+    <string name="error_missing_fields">Please fill all the fields</string>
+    <string name="hint_year">Year Published</string>
+</resources>
