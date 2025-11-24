@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#C60B1E</color>
+    <color name="primary_dark">#9E0916</color>
+    <color name="secondary">#FFC400</color>
+    <color name="background">#FAFAFA</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="image_placeholder">#E0E0E0</color>
+</resources>

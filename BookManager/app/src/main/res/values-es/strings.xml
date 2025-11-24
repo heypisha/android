@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Gestor de Libros</string>
+
+    <!-- Activity 1 -->
+    <string name="hint_title">Ingrese el título del libro</string>
+    <string name="hint_author">Ingrese el nombre del autor</string>
+    <string name="hint_year">Ingrese el año de publicación</string>
+    <string name="btn_next">Siguiente</string>
+    <string name="error_missing_fields">Por favor complete todos los campos</string>
+
+    <!-- Activity 2 -->
+    <string name="book_details">Detalles del libro</string>
+    <string name="book_title_label">Título</string>
+    <string name="book_author_label">Autor</string>
+    <string name="book_year_label">Año</string>
+    <string name="book_photo">Foto del libro</string>
+    <string name="take_photo">Tomar foto</string>
+    <string name="bda_title">Título</string>
+    <string name="bda_author">Autor</string>
+    <string name="bda_year">Año de publicación</string>
+
+    <!-- Activity 3 -->
+    <string name="common_intents">Intents comunes</string>
+    <string name="share_book_label">Compartir este libro</string>
+    <string name="share_book">Compartir</string>
+    <string name="search_label">Buscar en la web</string>
+    <string name="search_hint">Ingrese su búsqueda</string>
+    <string name="search_web">Buscar libro</string>
+    <string name="cia_title">Título</string>
+    <string name="cia_author">Autor</string>
+    <string name="cia_year">Año de publicación</string>
+    <string name="book_recommendation">Recomendación de libro</string>
+    <string name="share_book_via">Compartir libro vía</string>
+    <string name="check_out_this_book">Mira este libro</string>
+    <string name="by">por</string>
+</resources>

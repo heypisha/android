@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Gestionnaire de Livres</string>
+
+    <!-- Activity 1 -->
+    <string name="hint_title">Entrez le titre du livre</string>
+    <string name="hint_author">Entrez le nom de l\'auteur</string>
+    <string name="hint_year">Entrez l\'année de publication</string>
+    <string name="btn_next">Suivant</string>
+    <string name="error_missing_fields">Veuillez remplir tous les champs</string>
+
+    <!-- Activity 2 -->
+    <string name="book_details">Détails du livre</string>
+    <string name="book_title_label">Titre</string>
+    <string name="book_author_label">Auteur</string>
+    <string name="book_year_label">Année</string>
+    <string name="book_photo">Photo du livre</string>
+    <string name="take_photo">Prendre une photo</string>
+    <string name="bda_title">Titre</string>
+    <string name="bda_author">Auteur</string>
+    <string name="bda_year">Année de publication</string>
+
+    <!-- Activity 3 -->
+    <string name="common_intents">Intents courants</string>
+    <string name="share_book_label">Partager ce livre</string>
+    <string name="share_book">Partager</string>
+    <string name="search_label">Rechercher sur le web</string>
+    <string name="search_hint">Entrez votre recherche</string>
+    <string name="search_web">Rechercher le livre</string>
+    <string name="cia_title">Titre</string>
+    <string name="cia_author">Auteur</string>
+    <string name="cia_year">Année de publication</string>
+    <string name="book_recommendation">Recommandation de livre</string>
+    <string name="share_book_via">Partager le livre via</string>
+    <string name="check_out_this_book">Découvrez ce livre</string>
+    <string name="by">par</string>
+</resources>

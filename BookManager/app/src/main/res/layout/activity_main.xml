@@ -5,8 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/AppBackground"
+    android:background="@color/background"
     android:padding="25dp"
+    android:layout_marginTop="10dp"
     tools:context=".MainActivity">
 
     <TextView
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/averia_sans_libre_bold"
         android:gravity="center"
-        android:text="@string/app_title"
+        android:text="@string/app_name"
         android:textSize="48sp"
         android:layout_marginBottom="32dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +43,7 @@
         android:layout_marginTop="16dp"
         android:autofillHints="none"
         android:gravity="center"
-        android:hint="@string/hint_name"
+        android:hint="@string/hint_author"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
