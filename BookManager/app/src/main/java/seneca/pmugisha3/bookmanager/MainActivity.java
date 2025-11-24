@@ -8,8 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
   private static final String KEY_TITLE = "title";
   private static final String KEY_AUTHOR = "author";
   private static final String KEY_YEAR = "year";
+  private static final String EXTRA_BOOK="currentBook";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
       Intent intent = new Intent(MainActivity.this, BookDetailActivity.class);
 
-      intent.putExtra("currentBook", book);
+      intent.putExtra(EXTRA_BOOK, book);
       startActivity(intent); // pass the book details to the next activity
     });
 
