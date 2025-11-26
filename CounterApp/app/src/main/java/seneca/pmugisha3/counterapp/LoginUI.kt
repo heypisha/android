@@ -22,7 +22,7 @@ fun LogInUI(viewModel: UserViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.5f),
-                verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TextField(
@@ -44,7 +44,10 @@ fun LogInUI(viewModel: UserViewModel) {
         Spacer(modifier = Modifier.height(16.dp))
 
         if (viewModel.greetings.value.isNotBlank()) {
-            Text("Welcome, ${viewModel.greetings.value} !", style = MaterialTheme.typography.headlineMedium)
+            Text(
+                "Welcome, ${viewModel.greetings.value} !",
+                style = MaterialTheme.typography.headlineMedium
+            )
         }
     }
 }

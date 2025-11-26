@@ -20,10 +20,14 @@ import seneca.pmugisha3.counterapp.models.CounterViewModel
 // UI using jetpack compose toolkit
 @Composable
 fun UserInterface(viewModel: CounterViewModel) {
-    Column (modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f),
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.5f),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally ) {
-        Text("count ${viewModel.counter.value}",fontSize = 30.sp)// display the counter
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("count ${viewModel.counter.value}", fontSize = 30.sp)// display the counter
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -39,7 +43,7 @@ fun UserInterface(viewModel: CounterViewModel) {
                 // onclick listener
                 viewModel.decrease()
             }) {
-                Text("Decrease",fontSize = 20.sp)
+                Text("Decrease", fontSize = 20.sp)
             }
         }
 

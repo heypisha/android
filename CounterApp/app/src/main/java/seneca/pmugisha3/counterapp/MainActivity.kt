@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import seneca.pmugisha3.counterapp.models.CounterViewModel
@@ -22,7 +21,7 @@ class MainActivity : ComponentActivity() {
             val myVM = CounterViewModel()
             val userVM = UserViewModel()
             CounterAppTheme {
-                Column{
+                Column {
                     UserInterface(myVM)
 
                     Spacer(modifier = Modifier.height(10.dp))
