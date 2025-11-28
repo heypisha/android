@@ -32,3 +32,11 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Ignore all zip and rar archive files
+*.zip
+*.rar
+*.7z
+*.gz
+*.tar
+*.iso
