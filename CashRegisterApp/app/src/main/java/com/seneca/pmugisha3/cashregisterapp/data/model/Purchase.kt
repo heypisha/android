@@ -4,6 +4,9 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.seneca.pmugisha3.cashregisterapp.util.FormattingUtils
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 /**
  * Class representing a purchase of a product in the cart
@@ -15,6 +18,31 @@ import androidx.compose.runtime.setValue
  * mutableStateOf, allowing Compose to recompose only when needed.
  */
 @Stable
-class Purchase(val product: Product, quantity: Int) {
+class Purchase(
+    val product: Product,
+    quantity: Int,
+    val timestamp: Long = System.currentTimeMillis()
+) {
     var quantity by mutableStateOf(quantity)
+
+    /**
+     * Formats timestamp into human-readable date/time string
+     */
+    fun getFormatedTimestamp(): String {
+        return FormattingUtils.formatTimestamp(timestamp)
+    }
+
+    /**
+     * Gets total price for this purchase
+     */
+    fun getTotalPrice(): Double {
+        return FormattingUtils.calculateTotal(quantity,product.price)
+    }
+
+    /**
+     * Formats the total price as currency string
+     */
+    fun getFormatedTotal(): String {
+        return FormattingUtils.formatCurrency(getTotalPrice())
+    }
 }
