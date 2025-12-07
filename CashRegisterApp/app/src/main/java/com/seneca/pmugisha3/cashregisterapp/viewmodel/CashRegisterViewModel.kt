@@ -47,8 +47,17 @@ class CashRegisterViewModel(private val repository: CashRegisterRepository = Cas
         get() {
             val qty = enteredQuantity.toIntOrNull() ?: 0
             val price = selectedStockItem?.product?.price ?: 0.0
-            return FormattingUtils.calculateTotal(qty,price)
+            return FormattingUtils.calculateTotal(qty, price)
         }
+
+    /**
+     * Select a product from the stock list
+     * Reset quantity when selecting a new stock product
+     */
+    fun selectProduct(stockItem: StockItem) {
+        selectedStockItem = stockItem
+        enteredQuantity = ""
+    }
 
     /**
      * Append a digit to the entered quantity
@@ -86,18 +95,18 @@ class CashRegisterViewModel(private val repository: CashRegisterRepository = Cas
      * Update stock and add record to purchase history via repository
      * @return true if successful, false otherwise
      */
-    fun completePurchase(): Boolean{
-        val stockItem = selectedStockItem?:return false
-        val quantity = enteredQuantity.toIntOrNull()?:return false
+    fun completePurchase(): Boolean {
+        val stockItem = selectedStockItem ?: return false
+        val quantity = enteredQuantity.toIntOrNull() ?: return false
         return try {
             // Delegate to repository
-            repository.addPurchaseHistory(stockItem.product,quantity)
+            repository.addPurchaseHistory(stockItem.product, quantity)
 
             // Reset UI after successful transaction
-            selectedStockItem=null
+            selectedStockItem = null
             enteredQuantity = ""
             true
-        }catch (e: IllegalArgumentException){
+        } catch (e: IllegalArgumentException) {
             false
         }
     }

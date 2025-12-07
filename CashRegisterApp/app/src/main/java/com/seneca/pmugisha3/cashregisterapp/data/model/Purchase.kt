@@ -5,8 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.seneca.pmugisha3.cashregisterapp.util.FormattingUtils
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 /**
  * Class representing a purchase of a product in the cart
@@ -28,7 +26,7 @@ class Purchase(
     /**
      * Formats timestamp into human-readable date/time string
      */
-    fun getFormatedTimestamp(): String {
+    fun getFormattedTimestamp(): String {
         return FormattingUtils.formatTimestamp(timestamp)
     }
 
@@ -36,13 +34,13 @@ class Purchase(
      * Gets total price for this purchase
      */
     fun getTotalPrice(): Double {
-        return FormattingUtils.calculateTotal(quantity,product.price)
+        return FormattingUtils.calculateTotal(quantity, product.price)
     }
 
     /**
      * Formats the total price as currency string
      */
-    fun getFormatedTotal(): String {
+    fun getFormattedTotal(): String {
         return FormattingUtils.formatCurrency(getTotalPrice())
     }
 }
