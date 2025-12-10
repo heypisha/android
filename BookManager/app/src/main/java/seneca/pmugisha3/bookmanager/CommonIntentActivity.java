@@ -22,14 +22,11 @@ public class CommonIntentActivity extends AppCompatActivity implements View.OnCl
   private static final String KEY_AUTHOR = "author";
   private static final String KEY_YEAR = "year";
   private final static String EXTRA_BOOK = "currentBook";
-  private final static String EXTRA_PHOTO = "bookBitmap";
-  private TextView tvTitle, tvAuthor, tvYear;
-  private ImageView bookPhoto;
+  private final static String EXTRA_PHOTO = "photo";
 
-  private Book receivedBook;
-  private Bitmap photoBitmap;
+    private Book receivedBook;
 
-  @Override
+    @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     EdgeToEdge.enable(this);
@@ -38,21 +35,21 @@ public class CommonIntentActivity extends AppCompatActivity implements View.OnCl
     Log.d("lifecycle", "Book Detail Activity - on Create");
 
     // Initialize views
-    tvTitle = findViewById(R.id.tv_title);
-    tvAuthor = findViewById(R.id.tv_author);
-    tvYear = findViewById(R.id.tv_year);
-    bookPhoto = findViewById(R.id.iv_book_photo);
+      TextView tvTitle = findViewById(R.id.tv_title);
+      TextView tvAuthor = findViewById(R.id.tv_author);
+      TextView tvYear = findViewById(R.id.tv_year);
+      ImageView bookPhoto = findViewById(R.id.iv_book_photo);
 
     Button btnShare = findViewById(R.id.btn_share);
     Button btnSearch = findViewById(R.id.btn_search);
 
     receivedBook = getIntent().getParcelableExtra(EXTRA_BOOK);
-    photoBitmap = getIntent().getParcelableExtra(EXTRA_PHOTO);
+        Bitmap photoBitmap = getIntent().getParcelableExtra(EXTRA_PHOTO);
 
     if (receivedBook != null) {
       tvTitle.setText(receivedBook.getTitle());
       tvAuthor.setText(receivedBook.getAuthor());
-      tvYear.setText(receivedBook.getYear());
+      tvYear.setText(String.valueOf(receivedBook.getYear()));
     }
 
     if (photoBitmap != null) {
