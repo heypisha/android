@@ -1,5 +1,12 @@
 package seneca.pmugisha3.bookmanager;
 
+import static seneca.pmugisha3.bookmanager.util.Constants.EXTRA_BOOK;
+import static seneca.pmugisha3.bookmanager.util.Constants.EXTRA_PHOTO;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_AUTHOR;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_TITLE;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_YEAR;
+import static seneca.pmugisha3.bookmanager.util.Constants.LOG_TAG_LIFECYCLE;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -38,10 +45,6 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
   // Launcher for the camera activity
   private ActivityResultLauncher<Intent> cameraLauncher;
 
-  // Keys for saving and retrieving instance state
-  private static final String EXTRA_PHOTO = "photo";
-  private static final String EXTRA_BOOK = "currentBook";
-
   /**
    * Initializes the activity, its views, and retrieves the book details from the intent.
    *
@@ -53,7 +56,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     EdgeToEdge.enable(this);
     setContentView(R.layout.activity_book_detail);
 
-    Log.d("lifecycle", "Book Detail Activity - on Create");
+    Log.d(LOG_TAG_LIFECYCLE, "Book Detail Activity - on Create");
 
     // Initialize views
     tvTitle = findViewById(R.id.tvBookTitle);
@@ -78,14 +81,17 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     if (savedInstanceState != null) {
       photoBitmap = savedInstanceState.getParcelable(EXTRA_PHOTO);
       receivedBook = savedInstanceState.getParcelable(EXTRA_BOOK);
+      tvTitle.setText(savedInstanceState.getString(KEY_TITLE));
+      tvAuthor.setText(savedInstanceState.getString(KEY_AUTHOR));
+      tvYear.setText(savedInstanceState.getString(KEY_YEAR));
     } else {
       receivedBook = getIntent().getParcelableExtra(EXTRA_BOOK);
+      if (receivedBook != null) {
+        displayBookInfo();
+      }
     }
 
-    // Display book info and photo if available
-    if (receivedBook != null) {
-      displayBookInfo();
-    }
+    // Display photo if available
     if (photoBitmap != null) {
       bookPhoto.setImageBitmap(photoBitmap);
     }
@@ -140,7 +146,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
   @Override
   protected void onResume() {
     super.onResume();
-    Log.d("lifecycle", "Book Detail  Activity - on Resume");
+    Log.d(LOG_TAG_LIFECYCLE, "Book Detail  Activity - on Resume");
   }
 
   /**
@@ -149,7 +155,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    Log.d("lifecycle", "Book Detail  Activity - on Destroy");
+    Log.d(LOG_TAG_LIFECYCLE, "Book Detail  Activity - on Destroy");
   }
 
   /**
@@ -158,7 +164,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
   @Override
   protected void onPause() {
     super.onPause();
-    Log.d("lifecycle", "Book Detail  Activity - on Pause");
+    Log.d(LOG_TAG_LIFECYCLE, "Book Detail  Activity - on Pause");
   }
 
   /**
@@ -169,10 +175,14 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
   @Override
   protected void onSaveInstanceState(@NonNull Bundle outState) {
     super.onSaveInstanceState(outState);
-    Log.d("lifecycle", "Book Detail  Activity - on Save Instance State");
+    Log.d(LOG_TAG_LIFECYCLE, "Book Detail  Activity - on Save Instance State");
 
     // Save the photo and book data
     outState.putParcelable(EXTRA_PHOTO, photoBitmap);
     outState.putParcelable(EXTRA_BOOK, receivedBook);
+    // Save the text view states
+    outState.putString(KEY_TITLE, tvTitle.getText().toString());
+    outState.putString(KEY_AUTHOR, tvAuthor.getText().toString());
+    outState.putString(KEY_YEAR, tvYear.getText().toString());
   }
 }

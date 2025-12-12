@@ -1,5 +1,11 @@
 package seneca.pmugisha3.bookmanager;
 
+import static seneca.pmugisha3.bookmanager.util.Constants.EXTRA_BOOK;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_AUTHOR;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_TITLE;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_YEAR;
+import static seneca.pmugisha3.bookmanager.util.Constants.LOG_TAG_LIFECYCLE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,13 +27,6 @@ public class MainActivity extends AppCompatActivity {
   // EditText fields for book details
   private EditText titleInput, authorInput, yearInput;
 
-  // Keys for saving instance state
-  private static final String KEY_TITLE = "title";
-  private static final String KEY_AUTHOR = "author";
-  private static final String KEY_YEAR = "year";
-  // Key for passing book data between activities
-  private static final String EXTRA_BOOK = "currentBook";
-
   /**
    * Initializes the activity, sets up the user interface, and handles saved state.
    *
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     EdgeToEdge.enable(this);
     setContentView(R.layout.activity_main);
 
-    Log.d("lifecycle", "Main Activity - on Create");
+    Log.d(LOG_TAG_LIFECYCLE, "Main Activity - on Create");
 
     // Initialize UI components
     titleInput = findViewById(R.id.bookTitle);
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    Log.d("lifecycle", "Main Activity - on Resume");
+    Log.d(LOG_TAG_LIFECYCLE, "Main Activity - on Resume");
   }
 
   /**
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    Log.d("lifecycle", "Main Activity - on Destroy");
+    Log.d(LOG_TAG_LIFECYCLE, "Main Activity - on Destroy");
   }
 
   /**
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onPause() {
     super.onPause();
-    Log.d("lifecycle", "Main Activity - on Pause");
+    Log.d(LOG_TAG_LIFECYCLE, "Main Activity - on Pause");
   }
 
   /**
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onSaveInstanceState(@NonNull Bundle outState) {
     super.onSaveInstanceState(outState);
-    Log.d("lifecycle", "Main Activity - in onSaveInstanceState");
+    Log.d(LOG_TAG_LIFECYCLE, "Main Activity - in onSaveInstanceState");
     // Save the current input values
     outState.putString(KEY_TITLE, titleInput.getText().toString());
     outState.putString(KEY_AUTHOR, authorInput.getText().toString());

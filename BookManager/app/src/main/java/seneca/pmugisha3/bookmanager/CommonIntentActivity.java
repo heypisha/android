@@ -1,8 +1,13 @@
 package seneca.pmugisha3.bookmanager;
 
-import android.content.Intent;
+import static seneca.pmugisha3.bookmanager.util.Constants.EXTRA_BOOK;
+import static seneca.pmugisha3.bookmanager.util.Constants.EXTRA_PHOTO;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_AUTHOR;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_TITLE;
+import static seneca.pmugisha3.bookmanager.util.Constants.KEY_YEAR;
+import static seneca.pmugisha3.bookmanager.util.Constants.LOG_TAG_LIFECYCLE;
+
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,23 +16,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 
 import seneca.pmugisha3.bookmanager.models.Book;
+import seneca.pmugisha3.bookmanager.util.IntentUtils;
 
 /**
  * This activity demonstrates the use of common intents for sharing and searching for a book.
  */
 public class CommonIntentActivity extends AppCompatActivity implements View.OnClickListener {
-  // Keys for saving instance state
-  private static final String KEY_TITLE = "title";
-  private static final String KEY_AUTHOR = "author";
-  private static final String KEY_YEAR = "year";
-  // Keys for passing data between activities
-  private final static String EXTRA_BOOK = "currentBook";
-  private final static String EXTRA_PHOTO = "photo";
   // UI elements
   private TextView tvTitle, tvAuthor, tvYear;
   private ImageView bookPhoto;
@@ -47,7 +47,7 @@ public class CommonIntentActivity extends AppCompatActivity implements View.OnCl
     EdgeToEdge.enable(this);
     setContentView(R.layout.activity_common_intent);
 
-    Log.d("lifecycle", "Book Detail Activity - on Create");
+    Log.d(LOG_TAG_LIFECYCLE, "Common Intent Activity - on Create");
 
     // Initialize views
     tvTitle = findViewById(R.id.tv_title);
@@ -58,20 +58,18 @@ public class CommonIntentActivity extends AppCompatActivity implements View.OnCl
     Button btnShare = findViewById(R.id.btn_share);
     Button btnSearch = findViewById(R.id.btn_search);
 
-    // Restore state from either the saved instance or the intent
     if (savedInstanceState != null) {
+      receivedBook = savedInstanceState.getParcelable(EXTRA_BOOK);
+      photoBitmap = savedInstanceState.getParcelable(EXTRA_PHOTO);
       tvTitle.setText(savedInstanceState.getString(KEY_TITLE));
       tvAuthor.setText(savedInstanceState.getString(KEY_AUTHOR));
       tvYear.setText(savedInstanceState.getString(KEY_YEAR));
-      photoBitmap = savedInstanceState.getParcelable(EXTRA_PHOTO);
     } else {
       receivedBook = getIntent().getParcelableExtra(EXTRA_BOOK);
       photoBitmap = getIntent().getParcelableExtra(EXTRA_PHOTO);
 
       if (receivedBook != null) {
-        tvTitle.setText(receivedBook.getTitle());
-        tvAuthor.setText(receivedBook.getAuthor());
-        tvYear.setText(String.valueOf(receivedBook.getYear()));
+        displayBookInfo();
       }
     }
 
@@ -85,40 +83,31 @@ public class CommonIntentActivity extends AppCompatActivity implements View.OnCl
   }
 
   /**
-   * Handles click events for the buttons in the activity.
-   *
-   * @param v The view that was clicked.
+   * Displays the book's information in the UI with labels.
    */
+  private void displayBookInfo() {
+    tvTitle.setText(String.format("%s: %s", getString(R.string.book_title_label), receivedBook.getTitle()));
+    tvAuthor.setText(String.format("%s: %s", getString(R.string.book_author_label), receivedBook.getAuthor()));
+    tvYear.setText(String.format(Locale.getDefault(), "%s: %d", getString(R.string.book_year_label), receivedBook.getYear()));
+  }
+
   @Override
   public void onClick(View v) {
     int id = v.getId();
     if (id == R.id.btn_share) {
-      shareBook();
+      IntentUtils.shareBook(this, receivedBook);
     } else if (id == R.id.btn_search) {
-      searchBook();
+      IntentUtils.searchBook(this, receivedBook);
     }
   }
 
-  /**
-   * Creates and launches a web search intent for the book's title.
-   */
-  private void searchBook() {
-    String query = Uri.encode(receivedBook.getTitle());
-    String url = "https://www.google.com/search?q=" + query;
-    Intent browser = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-    startActivity(browser);
-  }
-
-  /**
-   * Creates and launches a share intent to share the book's details.
-   */
-  private void shareBook() {
-    String shareText = String.format(Locale.getDefault(), "%s: %s, %s %s (%d)", getString(R.string.check_out_this_book), receivedBook.getTitle(), getString(R.string.by), receivedBook.getAuthor(), receivedBook.getYear());
-    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-    shareIntent.setType("text/plain");
-    shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.book_recommendation));
-    shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
-    Intent chooser = Intent.createChooser(shareIntent, getString(R.string.share_book_via));
-    startActivity(chooser);
+  @Override
+  protected void onSaveInstanceState(@NonNull Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putParcelable(EXTRA_BOOK, receivedBook);
+    outState.putParcelable(EXTRA_PHOTO, photoBitmap);
+    outState.putString(KEY_TITLE, tvTitle.getText().toString());
+    outState.putString(KEY_AUTHOR, tvAuthor.getText().toString());
+    outState.putString(KEY_YEAR, tvYear.getText().toString());
   }
 }
