@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#0055A4</color>
-    <color name="primary_dark">#003D82</color>
-    <color name="secondary">#EF4135</color>
-    <color name="background">#F5F5F5</color>
+    <!-- French Palette (Provence) -->
+    <color name="primary">#6A5ACD</color> <!-- Lavender Blue -->
+    <color name="primary_dark">#483D8B</color> <!-- Darker Lavender for Status Bar -->
+    <color name="secondary">#FFD700</color> <!-- Sunflower Gold -->
+    <color name="accent">#C04000</color> <!-- Burnt Orange -->
+
+    <!-- Standard Colors -->
+    <color name="background">#F8F9FA</color> <!-- Light, clean background -->
     <color name="card_background">#FFFFFF</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    <color name="text_standard">#212121</color>
     <color name="image_placeholder">#E0E0E0</color>
 </resources>

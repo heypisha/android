@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#2196F3</color>
-    <color name="primary_dark">#1976D2</color>
-    <color name="secondary">#4CAF50</color>
-    <color name="background">#F5F5F5</color>
+    <!-- English/Default Palette (Classic Americana/Britannia) -->
+    <color name="primary">#0A3D62</color> <!-- Deep Navy Blue -->
+    <color name="primary_dark">#062840</color> <!-- Darker Navy for Status Bar -->
+    <color name="secondary">#B53471</color> <!-- Muted Magenta/Cranberry -->
+    <color name="accent">#F9A825</color> <!-- Gold Accent -->
+
+    <!-- Standard Colors -->
+    <color name="background">#F8F9FA</color> <!-- Light, clean background -->
     <color name="card_background">#FFFFFF</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    <color name="text_standard">#212121</color>
+    <color name="hint_text">#808080</color> <!-- Gray for hint text -->
     <color name="image_placeholder">#E0E0E0</color>
 </resources>

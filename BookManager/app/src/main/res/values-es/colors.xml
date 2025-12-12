@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#C60B1E</color>
-    <color name="primary_dark">#9E0916</color>
-    <color name="secondary">#FFC400</color>
-    <color name="background">#FAFAFA</color>
+    <!-- Spanish Palette (Mediterranean Coast) -->
+    <color name="primary">#D32F2F</color> <!-- Terracotta Red -->
+    <color name="primary_dark">#B71C1C</color> <!-- Darker Terracotta for Status Bar -->
+    <color name="secondary">#00796B</color> <!-- Deep Teal -->
+    <color name="accent">#FFC107</color> <!-- Amber Accent -->
+
+    <!-- Standard Colors -->
+    <color name="background">#F8F9FA</color> <!-- Light, clean background -->
     <color name="card_background">#FFFFFF</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    <color name="text_standard">#212121</color>
     <color name="image_placeholder">#E0E0E0</color>
 </resources>
