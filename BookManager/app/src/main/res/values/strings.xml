@@ -11,9 +11,9 @@
 
     <!-- Activity 2 -->
     <string name="book_details">Book Details</string>
-    <string name="book_title_label">Title: </string>
-    <string name="book_author_label">Author: </string>
-    <string name="book_year_label">Year: </string>
+    <string name="book_title_label">Title</string>
+    <string name="book_author_label">Author</string>
+    <string name="book_year_label">Year</string>
     <string name="book_photo">Book Photo</string>
     <string name="take_photo">Take Photo</string>
     <string name="bda_title">Title</string>
