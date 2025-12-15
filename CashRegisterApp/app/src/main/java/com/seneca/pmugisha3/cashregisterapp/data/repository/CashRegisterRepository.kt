@@ -17,14 +17,16 @@ class CashRegisterRepository {
     private val stockItems = mutableStateListOf<StockItem>()
 
     /**
-     * Mutable state list of stock items - automatically triggers recomposition when changed
+     * Mutable state list of purchase history - automatically triggers recomposition when changed
      */
     private val purchaseHistory = mutableStateListOf<Purchase>()
 
     // Initialize with sample data
     init {
+        // Add sample stock
         stockItems.addAll(SampleData.initialStock)
-        purchaseHistory.addAll(SampleData.sampleHistory)
+        // Add sample history, ensuring newest are first
+        purchaseHistory.addAll(SampleData.sampleHistory.reversed())
     }
 
     /**
@@ -38,23 +40,26 @@ class CashRegisterRepository {
     fun getPurchaseHistory(): List<Purchase> = purchaseHistory
 
     /**
-     * Processes a purchase by adding to history and updating the stock
+     * Processes a purchase by creating a new Purchase object, adding it to history,
+     * and updating the stock.
      *
-     * @param product - The product being purchased
+     * @param product - The product being purchased (for stock lookup)
      * @param quantity - Number of units of the product to purchase
-     * @throws IllegalArgumentException if insufficient stock is available
+     * @throws IllegalArgumentException (Validation is usually handled by the VM, but retained here)
      */
-    fun addPurchaseHistory(product: Product, quantity: Int) {
+    fun completePurchase(product: Product, quantity: Int) {
         // Find the product in the stock
         val item = stockItems.find { it.product.id == product.id }
 
-        // Validate stock availability
+        // The ViewModel should have validated this, but we finalize the state update here.
         if (item != null && item.stock >= quantity) {
+            // 1. Update Stock
             item.stock -= quantity // Decrease stock by quantity purchased
 
-            // Add purchase record to history
-            purchaseHistory.add(Purchase(product, quantity))
-        } else { // Throw an error if not enough stock
+            // 2. Add purchase record to history (creates the new @Stable Purchase object)
+            purchaseHistory.add(0, Purchase(product, quantity)) // Add to the front
+        } else {
+            // Throwing is fine, but the VM logic will catch this case before calling.
             throw IllegalArgumentException("Not enough stock for ${product.name}")
         }
     }

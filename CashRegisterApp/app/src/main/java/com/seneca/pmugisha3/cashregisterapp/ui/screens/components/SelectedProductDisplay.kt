@@ -20,6 +20,15 @@ import com.seneca.pmugisha3.cashregisterapp.data.model.Product
 import com.seneca.pmugisha3.cashregisterapp.data.model.StockItem
 import com.seneca.pmugisha3.cashregisterapp.util.FormattingUtils
 
+/**
+ * Displays the currently selected product with quantity and total
+ * @param selectedStockItem Currently selected stock item (null if none selected)
+ * @param enteredQuantity The quantity entered by user
+ * @param currentTotal Calculated total price
+ * @param canPay Whether the pay button should be enabled
+ * @param onPayClick Callback when pay button is clicked
+ * @param modifier Optional modifier for the component
+ */
 @Composable
 fun SelectedProductDisplay(
     modifier: Modifier = Modifier,
@@ -31,44 +40,63 @@ fun SelectedProductDisplay(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(text = "Selected Product", style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = "Selected Product",
+                style = MaterialTheme.typography.titleLarge
+            )
+
             HorizontalDivider()
+
             if (selectedStockItem != null) {
+                // Product name
                 Row(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Product:", style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        text = "Product:",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
                     Text(
                         text = selectedStockItem.product.name,
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
+                // Unit price
                 Row(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Price:", style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        text = "Price:",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
                     Text(
                         text = FormattingUtils.formatCurrency(selectedStockItem.product.price),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
+                // Quantity
                 Row(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Quantity:", style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        text = "Quantity:",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
                     Text(
                         text = enteredQuantity.ifEmpty { "0" },
                         style = MaterialTheme.typography.bodyLarge
@@ -77,30 +105,41 @@ fun SelectedProductDisplay(
 
                 HorizontalDivider()
 
+                // Total
                 Row(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Total:", style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        text = "Total:",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
                     Text(
                         text = FormattingUtils.formatCurrency(currentTotal),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.headlineMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
 
-                Button(onClick = onPayClick, modifier = Modifier.fillMaxWidth(), enabled = canPay) {
-                    Text(text = "Pay", style = MaterialTheme.typography.titleMedium)
+                // Pay button
+                Button(
+                    onClick = onPayClick,
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = canPay
+                ) {
+                    Text(
+                        text = "Pay",
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
             } else {
+                // No product selected
                 Text(
-                    text = "Please Select a product",
+                    text = "Please select a product",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.align(
-                        Alignment.CenterHorizontally
-                    )
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
         }

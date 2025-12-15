@@ -28,14 +28,14 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+    /*compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }*/
     kotlin {
-        jvmToolchain(11)
+        jvmToolchain(17)
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
     }
     buildFeatures {
@@ -45,6 +45,8 @@ android {
 
 dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
+
+    implementation(libs.androidx.compose.material.icons.extended)
 
     implementation(composeBom)
     testImplementation(composeBom)

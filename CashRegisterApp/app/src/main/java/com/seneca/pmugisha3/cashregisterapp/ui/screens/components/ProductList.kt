@@ -2,9 +2,10 @@ package com.seneca.pmugisha3.cashregisterapp.ui.screens.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,77 +23,62 @@ import com.seneca.pmugisha3.cashregisterapp.data.model.StockItem
 import com.seneca.pmugisha3.cashregisterapp.util.FormattingUtils
 
 /**
- * Displays a list of products with their stock
- * @param stockItems List of products with available stock
- * @param selectedStockItem Currently selected stock item (if any)
- * @param onProductClick Callback when a product is clicked
- * @param modifier Optional modifier for the component
+ * List view displaying available stock items (Name, Quantity, Price).
  */
 @Composable
 fun ProductList(
-    modifier: Modifier = Modifier,
     stockItems: List<StockItem>,
     selectedStockItem: StockItem?,
-    onProductClick: (StockItem) -> Unit
+    onProductClick: (StockItem) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        items(stockItems) { stockItem ->
-            ProductListItem(
-                stockItem = stockItem,
-                isSelected = stockItem == selectedStockItem,
-                onClick = { onProductClick(stockItem) })
-        }
-    }
-}
-
-/**
- * Single product item in the list
- */
-@Composable
-fun ProductListItem(
-    modifier: Modifier = Modifier,
-    stockItem: StockItem,
-    isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected)
-                MaterialTheme.colorScheme.primaryContainer
-            else
-                MaterialTheme.colorScheme.surface
-        )
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = modifier.weight(1f)) {
-                Text(text = stockItem.product.name, style = MaterialTheme.typography.titleMedium)
-                Text(
-                    text = FormattingUtils.formatCurrency(stockItem.product.price),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+        item {
+            // Header for the list
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Product Name", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(3f))
+                Text("Stock", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
+                Text("Price", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1.5f), maxLines = 1)
             }
-            Text(
-                text = "Stock: ${stockItem.stock}",
-                style = MaterialTheme.typography.bodySmall,
-                color = if (stockItem.stock > 0)
-                    MaterialTheme.colorScheme.onSurface
-                else
-                    MaterialTheme.colorScheme.error
-            )
+            Spacer(modifier = Modifier.height(4.dp))
+        }
+
+        items(stockItems) { item ->
+            val isSelected = item.product.id == selectedStockItem?.product?.id
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onProductClick(item) }
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(item.product.name, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(3f))
+                    // The stock property is an observable state property
+                    Text("${item.stock}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                    Text(
+                        FormattingUtils.formatCurrency(item.product.price),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.weight(1.5f)
+                    )
+                }
+            }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -70,7 +70,7 @@ fun PurchaseHistoryItem(
             ) {
                 Text(
                     text = "Total:",
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleLarge
                 )
                 Text(
                     text = purchase.getFormattedTotal(),
