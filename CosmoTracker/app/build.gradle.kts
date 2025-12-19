@@ -1,7 +1,15 @@
+import java.util.Properties
+
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
+}
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
 }
 
 android {
@@ -16,6 +24,9 @@ android {
     versionName = "1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    
+    // Add the NASA API Key from local.properties to BuildConfig
+    buildConfigField("String", "NASA_API_KEY", "\"${localProperties.getProperty("NASA_API_KEY") ?: "DEMO_KEY"}\"")
   }
 
   buildTypes {
@@ -27,14 +38,17 @@ android {
       )
     }
   }
+  
+  buildFeatures {
+    compose = true
+    buildConfig = true // Enable BuildConfig generation
+  }
+
   kotlin {
     jvmToolchain(17)
     compilerOptions {
       jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
-  }
-  buildFeatures {
-    compose = true
   }
 }
 
@@ -53,6 +67,16 @@ dependencies {
   implementation(libs.androidx.compose.runtime)
   implementation(libs.androidx.material3)
   implementation(libs.compose.material.icons)
+
+  // Retrofit
+  implementation(libs.retrofit.core)
+  implementation(libs.retrofit.converter.moshi)
+  implementation(libs.okhttp.core)
+  implementation(libs.okhttp.logging)
+
+  // Moshi
+  implementation(libs.moshi.core)
+  implementation(libs.moshi.kotlin)
 
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)

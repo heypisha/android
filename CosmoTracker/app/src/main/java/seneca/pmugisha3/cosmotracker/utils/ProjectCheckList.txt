@@ -1,0 +1,151 @@
+PHASE 1 — Skeleton Project
+	🎯 Goal: App runs, navigation works, all required screens exist with placeholder content.
+
+Project Initialization
+	 Create new Android Studio project
+	 Use Empty Compose Activity
+	 Kotlin + Compose enabled
+	 Correct package name (seneca.pmugisha3.cosmotracker)
+	 App launches successfully on emulator/device
+
+Dependencies & Tooling (Minimal, Skeleton-Only)
+	 Configure Compose BOM
+	 Add Navigation Compose dependency
+	 Add Lifecycle ViewModel Compose dependency
+	 Confirm project syncs successfully
+
+	Ignore dependency analyzer warnings for now (intentionally deferred)
+
+🚫 Do NOT add yet:
+	Retrofit
+	Room
+	Firebase
+	Location services
+	Coil
+	KSP / Google Services plugin
+
+Navigation Setup (Core Skeleton)
+	Create ui/navigation package
+	Create NavGraph.kt
+	Add NavHost
+	Define NavController using rememberNavController()
+	Set start destination
+	Verify app shows initial screen via NavHost
+
+Route Modeling
+	Create sealed class for routes:
+		Home
+		Events
+		Event Details (with placeholder arguments)
+		Favourites
+		Hazard Near Me
+	 Confirm navigation between all screens works
+
+Screen Creation (Placeholders Only)
+	🎯 No logic, no ViewModels, no data
+
+	Create one composable per screen, with minimal content.
+
+	Each screen should include:
+		○ A title (e.g. Text("Home Screen"))
+		○ Optional subtitle (e.g. Text("APOD will be displayed here"))
+
+	Required Screens:
+	HomeScreen
+	EventsScreen
+	EventDetailScreen
+	FavouritesScreen
+	HazardNearMeScreen
+
+Navigation Wiring
+	Connect each route to its screen composable
+	Add basic navigation actions (buttons or clicks)
+	Confirm navigation between all screens works
+	Verify back navigation works correctly
+
+App-Level UI Structure
+	Wrap app in Scaffold
+	Add TopAppBar (title only)
+	Optional: BottomNavigation (even if buttons don’t do much yet)
+	Confirm navigation still works inside the scaffold
+
+	🚫 Do NOT add yet:
+	Animations
+	Theming polish
+	Icons
+	State management
+
+Basic Project Structure
+	Set up folders early (even if empty):
+	 ui/screens/
+	 ui/navigation/
+	 ui/components/
+	 viewmodel/
+	 data/
+	 data/remote/
+	 data/local/
+	 repository/
+
+Skeleton Milestone Validation
+	Before moving on, confirm:
+	App builds with no errors
+	You can navigate to every screen
+	Every screen displays placeholder content
+	No business logic yet
+	Code is committed to GitHub (skeleton-navigation commit)
+		○ Commit message: feat: navigation skeleton & placeholder screens
+
+PHASE 2 — Remote Data (NASA APIs)
+
+	🎯 Goal: Fetch and display real data.
+
+	 Add Retrofit & OkHttp dependencies
+	Add Moshi
+	Create API service interfaces
+	Create data models (DTOs)
+	Implement repository layer
+	Add ViewModels for Home & Events
+	Display APOD image on Home screen
+	Display EONET events list
+
+PHASE 3 — Local Data & Persistence
+
+	🎯 Goal: Save and retrieve user data.
+
+	Add Room dependencies (with BOM)
+	Enable KSP
+	Create Room entities
+	Create DAO interfaces
+	Implement local repository
+	Add favourites functionality
+
+PHASE 4 — Firebase Integration
+
+	🎯 Goal: Sync favourites across sessions/devices.
+
+	Add Firebase BOM
+	Configure Firebase project
+	Connect Firestore
+	Sync favourites to cloud
+	Handle basic error states
+
+PHASE 5 — Location-Based Feature
+
+	🎯 Goal: Show hazards near the user.
+
+	Add Location Services dependency
+	Request runtime permissions
+	Fetch user location
+	Filter hazard events by proximity
+	Display results on Hazard Near Me screen
+
+PHASE 6 — Polish & Submission
+
+	🎯 Goal: Submission-ready app.
+
+	UI polish (spacing, typography)
+	Loading states
+	Error handling
+	Edge-case testing
+	Record demo video
+	Final README update
