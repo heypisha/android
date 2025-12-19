@@ -22,9 +22,6 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     ) {
         composable(route = Routes.Home.route) {
             HomeScreen(
-                onNavigateToEvents = {
-                    navController.navigate(Routes.Events.route)
-                }
             )
         }
 

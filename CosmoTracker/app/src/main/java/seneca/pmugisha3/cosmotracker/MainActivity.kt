@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Favorite
@@ -56,7 +57,7 @@ fun CosmoTrackerApp() {
             NavigationBar {
                 val items = listOf(
                     NavigationItem("Home", Routes.Home.route, Icons.Default.Home),
-                    NavigationItem("Events", Routes.Events.route, Icons.Default.List),
+                    NavigationItem("Events", Routes.Events.route, Icons.AutoMirrored.Filled.List),
                     NavigationItem("Favorites", Routes.Favorites.route, Icons.Default.Favorite),
                     NavigationItem("Hazards", Routes.HazardNearMe.route, Icons.Default.Warning)
                 )
@@ -73,9 +74,9 @@ fun CosmoTrackerApp() {
                                     saveState = true
                                 }
                                 // Avoid multiple copies of the same destination when
-                                // reselecting the same item
+                                // re-selecting the same item
                                 launchSingleTop = true
-                                // Restore state when reselecting a previously selected item
+                                // Restore state when re-selecting a previously selected item
                                 restoreState = true
                             }
                         },
