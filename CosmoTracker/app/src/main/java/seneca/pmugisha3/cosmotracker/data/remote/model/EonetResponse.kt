@@ -5,8 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class EonetResponse(
-    @Json(name = "title") val title: String?,
-    @Json(name = "description") val description: String?,
-    @Json(name = "link") val link: String?,
-    @Json(name = "events") val events: List<EventDto>
+    @Json(name = "title") val title: String? = null,
+    @Json(name = "description") val description: String? = null,
+    @Json(name = "link") val link: String? = null,
+    @Json(name = "events") val events: List<EventDto> = emptyList()
 )

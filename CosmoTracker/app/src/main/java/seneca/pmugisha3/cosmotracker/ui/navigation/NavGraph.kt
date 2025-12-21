@@ -21,8 +21,7 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
         modifier = modifier
     ) {
         composable(route = Routes.Home.route) {
-            HomeScreen(
-            )
+            HomeScreen()
         }
 
         composable(route = Routes.Events.route) {
@@ -37,14 +36,14 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
         }
 
         composable(
-            route = Routes.EventDetail.route,
+            route = Routes.EventDetail.routeWithArgs,
             arguments = listOf(
-                navArgument("eventId") {
+                navArgument(Routes.EventDetail.argName) {
                     type = NavType.StringType
                 }
             )
         ) { backStackEntry ->
-            val eventId = backStackEntry.arguments?.getString("eventId") ?: ""
+            val eventId = backStackEntry.arguments?.getString(Routes.EventDetail.argName) ?: ""
             EventDetailScreen(
                 eventId = eventId,
                 onNavigateBack = {
