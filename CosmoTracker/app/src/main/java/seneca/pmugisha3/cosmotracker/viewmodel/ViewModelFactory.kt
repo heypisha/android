@@ -5,7 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepository
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepositoryImpl
 
-class ViewModelFactory(private val repository: SpaceRepository = SpaceRepositoryImpl()) : ViewModelProvider.Factory {
+class ViewModelFactory(
+    private val repository: SpaceRepository = SpaceRepositoryImpl(),
+    private val eventId: String? = null
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
@@ -14,6 +17,10 @@ class ViewModelFactory(private val repository: SpaceRepository = SpaceRepository
         if (modelClass.isAssignableFrom(EventsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return EventsViewModel(repository) as T
+        }
+        if (modelClass.isAssignableFrom(EventDetailViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return EventDetailViewModel(repository, eventId ?: "") as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

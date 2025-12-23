@@ -4,6 +4,7 @@ plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
+  alias(libs.plugins.ksp)
 }
 
 val localProperties = Properties()
@@ -86,6 +87,11 @@ dependencies {
   implementation(libs.moshi.core)
   implementation(libs.moshi.kotlin)
   implementation(libs.coil.compose)
+
+  // Room
+  implementation(libs.room.runtime)
+  implementation(libs.room.ktx)
+  ksp(libs.room.compiler)
 
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
