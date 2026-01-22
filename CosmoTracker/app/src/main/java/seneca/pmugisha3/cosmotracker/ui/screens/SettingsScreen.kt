@@ -1,7 +1,6 @@
 package seneca.pmugisha3.cosmotracker.ui.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,8 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HazardNearMeScreen(
-    onEventClick: (String) -> Unit = {}
+fun SettingsScreen(
+    onNavigateBack: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -22,20 +21,20 @@ fun HazardNearMeScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Hazard Near Me",
+            text = "Settings & About",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Location-based hazard monitoring",
+            text = "App information and settings",
             fontSize = 16.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "This feature will be implemented in Phase 5",
+            text = "CosmoTracker v1.0",
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

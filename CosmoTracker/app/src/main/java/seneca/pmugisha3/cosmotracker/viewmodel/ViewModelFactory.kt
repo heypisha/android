@@ -1,27 +1,33 @@
 package seneca.pmugisha3.cosmotracker.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepository
-import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepositoryImpl
 
 class ViewModelFactory(
-    private val repository: SpaceRepository = SpaceRepositoryImpl(),
+    private val application: Application,
     private val eventId: String? = null
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(repository) as T
+        return when {
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                @Suppress("UNCHECKED_CAST")
+                HomeViewModel(application) as T
+            }
+            modelClass.isAssignableFrom(EventsViewModel::class.java) -> {
+                @Suppress("UNCHECKED_CAST")
+                EventsViewModel(application) as T
+            }
+            modelClass.isAssignableFrom(FavoriteEventViewModel::class.java) -> {
+                @Suppress("UNCHECKED_CAST")
+                FavoriteEventViewModel(application) as T
+            }
+             modelClass.isAssignableFrom(EventDetailViewModel::class.java) -> {
+                 @Suppress("UNCHECKED_CAST")
+                 EventDetailViewModel(application, eventId ?: "") as T
+             }
+            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
-        if (modelClass.isAssignableFrom(EventsViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return EventsViewModel(repository) as T
-        }
-        if (modelClass.isAssignableFrom(EventDetailViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return EventDetailViewModel(repository, eventId ?: "") as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

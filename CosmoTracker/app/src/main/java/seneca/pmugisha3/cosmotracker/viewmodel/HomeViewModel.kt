@@ -1,6 +1,7 @@
 package seneca.pmugisha3.cosmotracker.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import seneca.pmugisha3.cosmotracker.data.remote.model.ApodResponse
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepository
+import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepositoryImpl
 
 sealed interface HomeUiState {
     object Loading : HomeUiState
@@ -15,24 +17,29 @@ sealed interface HomeUiState {
     data class Error(val message: String) : HomeUiState
 }
 
-class HomeViewModel(private val repository: SpaceRepository) : ViewModel() {
-
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
+    
+    private val repository: SpaceRepository = SpaceRepositoryImpl(application)
+    
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
-
+    
     init {
-        getApod()
+        loadApod()
     }
-
-    fun getApod() {
+    
+    fun loadApod() {
         viewModelScope.launch {
             _uiState.value = HomeUiState.Loading
+            
             repository.getApod()
                 .onSuccess { apod ->
                     _uiState.value = HomeUiState.Success(apod)
                 }
-                .onFailure { exception ->
-                    _uiState.value = HomeUiState.Error(exception.message ?: "An unknown error occurred")
+                .onFailure { error ->
+                    _uiState.value = HomeUiState.Error(
+                        error.message ?: "Unknown error occurred"
+                    )
                 }
         }
     }

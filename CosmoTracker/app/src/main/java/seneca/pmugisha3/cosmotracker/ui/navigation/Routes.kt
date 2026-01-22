@@ -10,4 +10,5 @@ sealed class Routes(val route: String) {
     }
     object Favorites : Routes("favorites")
     object HazardNearMe : Routes("hazard_near_me")
+  object Settings : Routes("settings")
 }
