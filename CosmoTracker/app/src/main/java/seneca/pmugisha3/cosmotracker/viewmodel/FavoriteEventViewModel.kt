@@ -22,9 +22,20 @@ class FavoriteEventViewModel(application: Application) : AndroidViewModel(applic
             initialValue = emptyList()
         )
 
+    init {
+        // Sync favorites from Firebase when ViewModel is created
+        syncFromFirebase()
+    }
+
     fun deleteFavorite(eventId: String) {
         viewModelScope.launch {
             repository.removeFavorite(eventId)
+        }
+    }
+
+    private fun syncFromFirebase() {
+        viewModelScope.launch {
+            repository.syncFavoritesFromFirebase()
         }
     }
 }

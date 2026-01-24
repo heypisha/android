@@ -17,4 +17,8 @@ interface SpaceRepository {
     suspend fun addFavorite(event: EventDto)
     suspend fun removeFavorite(eventId: String)
     suspend fun isFavorite(eventId: String): Boolean
+
+    // Firebase sync
+    suspend fun syncFavoritesToFirebase()
+    suspend fun syncFavoritesFromFirebase()
 }
