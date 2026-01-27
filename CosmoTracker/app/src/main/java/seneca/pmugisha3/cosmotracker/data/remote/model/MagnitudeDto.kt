@@ -5,6 +5,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class MagnitudeDto(
-    @Json(name = "value") val value: Double?,
-    @Json(name = "unit") val unit: String?
+  @Json(name = "value") val value: Double?,
+  @Json(name = "unit") val unit: String?
 )

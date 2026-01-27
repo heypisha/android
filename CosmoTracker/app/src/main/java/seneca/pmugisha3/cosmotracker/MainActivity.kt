@@ -8,13 +8,13 @@ import seneca.pmugisha3.cosmotracker.ui.CosmoTrackerApp
 import seneca.pmugisha3.cosmotracker.ui.theme.CosmoTrackerTheme
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            CosmoTrackerTheme {
-                CosmoTrackerApp()
-            }
-        }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
+    setContent {
+      CosmoTrackerTheme {
+        CosmoTrackerApp()
+      }
     }
+  }
 }

@@ -8,8 +8,8 @@ import seneca.pmugisha3.cosmotracker.data.remote.model.EventDto
 
 interface SpaceRepository {
     // Remote data
-    suspend fun getApod(): Result<ApodResponse>
-    suspend fun getEvents(status: String = "open", limit: Int = 50): Result<EonetResponse>
+    suspend fun getApod(): Resource<ApodResponse>
+    suspend fun getEvents(status: String = "open", limit: Int = 50): Resource<EonetResponse>
 
     // Local data (favorites)
     fun getAllFavorites(): Flow<List<FavoriteEventEntity>>

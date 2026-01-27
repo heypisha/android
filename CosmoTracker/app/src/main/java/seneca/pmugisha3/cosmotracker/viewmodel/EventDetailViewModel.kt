@@ -2,13 +2,13 @@ package seneca.pmugisha3.cosmotracker.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import seneca.pmugisha3.cosmotracker.data.remote.model.EventDto
+import seneca.pmugisha3.cosmotracker.data.repository.Resource
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepository
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepositoryImpl
 
@@ -19,9 +19,9 @@ sealed interface EventDetailUiState {
 }
 
 class EventDetailViewModel(
-    application: Application, private  val eventId: String
+    application: Application, private val eventId: String
 ) : AndroidViewModel(application) {
-  private val repository: SpaceRepository = SpaceRepositoryImpl(application)
+    private val repository: SpaceRepository = SpaceRepositoryImpl(application)
 
     private val _uiState = MutableStateFlow<EventDetailUiState>(EventDetailUiState.Loading)
     val uiState: StateFlow<EventDetailUiState> = _uiState.asStateFlow()
@@ -33,18 +33,22 @@ class EventDetailViewModel(
     fun getEventDetail() {
         viewModelScope.launch {
             _uiState.value = EventDetailUiState.Loading
-            repository.getEvents()
-                .onSuccess { response ->
-                    val event = response.events.find { it.id == eventId }
+            when (val result = repository.getEvents()) {
+                is Resource.Success -> {
+                    val event = result.data.events.find { it.id == eventId }
                     if (event != null) {
                         _uiState.value = EventDetailUiState.Success(event)
                     } else {
                         _uiState.value = EventDetailUiState.Error("Event not found")
                     }
                 }
-                .onFailure { exception ->
-                    _uiState.value = EventDetailUiState.Error(exception.message ?: "An unknown error occurred")
+                is Resource.Error -> {
+                    _uiState.value = EventDetailUiState.Error(result.message)
                 }
+                is Resource.Loading -> {
+                    _uiState.value = EventDetailUiState.Loading
+                }
+            }
         }
     }
 }

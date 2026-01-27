@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import seneca.pmugisha3.cosmotracker.data.remote.model.ApodResponse
+import seneca.pmugisha3.cosmotracker.data.repository.Resource
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepository
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepositoryImpl
 
@@ -18,29 +19,31 @@ sealed interface HomeUiState {
 }
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
-    
+
     private val repository: SpaceRepository = SpaceRepositoryImpl(application)
-    
+
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
-    
+
     init {
         loadApod()
     }
-    
+
     fun loadApod() {
         viewModelScope.launch {
             _uiState.value = HomeUiState.Loading
-            
-            repository.getApod()
-                .onSuccess { apod ->
-                    _uiState.value = HomeUiState.Success(apod)
+
+            when (val result = repository.getApod()) {
+                is Resource.Success -> {
+                    _uiState.value = HomeUiState.Success(result.data)
                 }
-                .onFailure { error ->
-                    _uiState.value = HomeUiState.Error(
-                        error.message ?: "Unknown error occurred"
-                    )
+                is Resource.Error -> {
+                    _uiState.value = HomeUiState.Error(result.message)
                 }
+                is Resource.Loading -> {
+                    _uiState.value = HomeUiState.Loading
+                }
+            }
         }
     }
 }

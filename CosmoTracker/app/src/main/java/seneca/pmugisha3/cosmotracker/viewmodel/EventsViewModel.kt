@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import seneca.pmugisha3.cosmotracker.data.remote.model.EventDto
+import seneca.pmugisha3.cosmotracker.data.repository.Resource
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepository
 import seneca.pmugisha3.cosmotracker.data.repository.SpaceRepositoryImpl
 
@@ -35,16 +36,18 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             _eventsState.value = EventsUiState.Loading
 
-            repository.getEvents()
-                .onSuccess { response ->
-                    _eventsState.value = EventsUiState.Success(response.events)
-                    checkFavorites(response.events)
+            when (val result = repository.getEvents()) {
+                is Resource.Success -> {
+                    _eventsState.value = EventsUiState.Success(result.data.events)
+                    checkFavorites(result.data.events)
                 }
-                .onFailure { error ->
-                    _eventsState.value = EventsUiState.Error(
-                        error.message ?: "Unknown error occurred"
-                    )
+                is Resource.Error -> {
+                    _eventsState.value = EventsUiState.Error(result.message)
                 }
+                is Resource.Loading -> {
+                    _eventsState.value = EventsUiState.Loading
+                }
+            }
         }
     }
 
@@ -52,16 +55,18 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             _eventsState.value = EventsUiState.Loading
 
-            repository.getEvents(status, limit)
-                .onSuccess { response ->
-                    _eventsState.value = EventsUiState.Success(response.events)
-                    checkFavorites(response.events)
+            when (val result = repository.getEvents(status, limit)) {
+                is Resource.Success -> {
+                    _eventsState.value = EventsUiState.Success(result.data.events)
+                    checkFavorites(result.data.events)
                 }
-                .onFailure { error ->
-                    _eventsState.value = EventsUiState.Error(
-                        error.message ?: "Unknown error occurred"
-                    )
+                is Resource.Error -> {
+                    _eventsState.value = EventsUiState.Error(result.message)
                 }
+                is Resource.Loading -> {
+                    _eventsState.value = EventsUiState.Loading
+                }
+            }
         }
     }
 

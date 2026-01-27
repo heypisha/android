@@ -37,7 +37,11 @@ class SpaceRepositoryImpl(context: Context) : SpaceRepository {
                     Log.d(TAG, "Anonymous sign-in successful: ${it.user?.uid}")
                 }
                 .addOnFailureListener { e ->
-                    Log.e(TAG, "Anonymous sign-in failed. Check if Anonymous Auth is enabled in Firebase Console.", e)
+                    Log.e(
+                        TAG,
+                        "Anonymous sign-in failed. Check if Anonymous Auth is enabled in Firebase Console.",
+                        e
+                    )
                 }
         } else {
             Log.d(TAG, "Already signed in as: ${firebaseAuth.currentUser?.uid}")
@@ -45,21 +49,21 @@ class SpaceRepositoryImpl(context: Context) : SpaceRepository {
     }
 
     // Remote data
-    override suspend fun getApod(): Result<ApodResponse> {
+    override suspend fun getApod(): Resource<ApodResponse> {
         return try {
             val response = nasaApi.getApod()
-            Result.success(response)
+            Resource.Success(response)
         } catch (e: Exception) {
-            Result.failure(e)
+            Resource.Error(e.message ?: "Unknown error occurred", e)
         }
     }
 
-    override suspend fun getEvents(status: String, limit: Int): Result<EonetResponse> {
+    override suspend fun getEvents(status: String, limit: Int): Resource<EonetResponse> {
         return try {
             val response = eonetApi.getEvents(status, limit)
-            Result.success(response)
+            Resource.Success(response)
         } catch (e: Exception) {
-            Result.failure(e)
+            Resource.Error(e.message ?: "Unknown error occurred", e)
         }
     }
 
